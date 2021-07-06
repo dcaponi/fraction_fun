@@ -31,7 +31,7 @@ func New(s string) FracArg {
 	if len(parts) > 1 {
 		w, err = strconv.Atoi(parts[0])
 		if err != nil {
-			log.Fatalf("illegal argument given %s", s)
+			log.Fatalf("illegal argument given for whole %s", s)
 		}
 	}
 
@@ -41,7 +41,7 @@ func New(s string) FracArg {
 	if len(parts) == 1 {
 		w, err = strconv.Atoi(parts[0])
 		if err != nil {
-			log.Fatalf("illegal argument given %s", s)
+			log.Fatalf("illegal argument given for whole %s", s)
 		}
 		if neg {
 			w *= -1 // preserve sign
@@ -52,13 +52,13 @@ func New(s string) FracArg {
 	// numerator
 	n, err = strconv.Atoi(parts[0])
 	if err != nil {
-		log.Fatalf("illegal argument given %s", s)
+		log.Fatalf("illegal argument given for numerator %s", s)
 	}
 
 	// denominator
 	d, err = strconv.Atoi(parts[1])
 	if err != nil || d == 0 { // zero denominator protection
-		log.Fatalf("illegal argument given %s", s)
+		log.Fatalf("illegal argument given for denominator %s", s)
 	}
 
 	// chuck the whole part onto the numerator
@@ -112,12 +112,13 @@ func (a *FracArg) Red() {
 // the program inputs (e.g 3_1/3) in its reduced and/or mixed form (e.g. 7/2 becomes 3_1/2)
 func (f FracArg) ToString() string {
 	f.Red()
-	if f.Num/f.Den == 0 {
-		return fmt.Sprintf("%d/%d", f.Num, f.Den)
-	}
 	if f.Num%f.Den == 0 {
 		return fmt.Sprintf("%d", f.Num/f.Den)
 	}
+	if f.Num/f.Den == 0 {
+		return fmt.Sprintf("%d/%d", f.Num, f.Den)
+	}
+
 	return fmt.Sprintf("%d_%d/%d", f.Num/f.Den, int(math.Abs(float64(f.Num%f.Den))), f.Den)
 }
 
