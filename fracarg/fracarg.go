@@ -111,7 +111,6 @@ func (a *FracArg) Red() {
 // ToString converts the FracArg to a string representation in the same style as
 // the program inputs (e.g 3_1/3) in its reduced and/or mixed form (e.g. 7/2 becomes 3_1/2)
 func (f FracArg) ToString() string {
-	f.Red()
 	if f.Num%f.Den == 0 {
 		return fmt.Sprintf("%d", f.Num/f.Den)
 	}

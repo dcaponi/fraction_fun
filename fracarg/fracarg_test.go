@@ -105,6 +105,23 @@ func TestDiv(t *testing.T) {
 	}
 }
 
+func TestRed(t *testing.T) {
+	tests := map[string]struct {
+		Input    FracArg
+		Expected FracArg
+	}{
+		"It reduces a fraction": {
+			Input: FracArg{Num: 2, Den: 4}, Expected: FracArg{Num: 1, Den: 2},
+		},
+	}
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			test.Input.Red()
+			assert.Equal(t, test.Expected, test.Input)
+		})
+	}
+}
+
 func TestToString(t *testing.T) {
 	tests := map[string]struct {
 		Input    FracArg
@@ -113,17 +130,11 @@ func TestToString(t *testing.T) {
 		"It parses a mixed number": {
 			Input: FracArg{Num: 7, Den: 2}, Expected: "3_1/2",
 		},
-		"It reduces and parses to number": {
-			Input: FracArg{Num: 14, Den: 4}, Expected: "3_1/2",
-		},
 		"It parses a whole number": {
 			Input: FracArg{Num: 3, Den: 1}, Expected: "3",
 		},
 		"It parses a fraction": {
 			Input: FracArg{Num: 1, Den: 2}, Expected: "1/2",
-		},
-		"It reduces a fraction": {
-			Input: FracArg{Num: 2, Den: 4}, Expected: "1/2",
 		},
 		"It parses a negative mixed number": {
 			Input: FracArg{Num: -7, Den: 2}, Expected: "-3_1/2",

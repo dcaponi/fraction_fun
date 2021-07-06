@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	var a, b, r string
+	var a, b string
+	var y fracarg.FracArg
 	var op rune
 
 	if len(os.Args) != 4 {
@@ -22,22 +23,23 @@ func main() {
 	a = os.Args[1]
 	op = rune(os.Args[2][0])
 	b = os.Args[3]
-	fmt.Println(os.Args)
+
 	fa := fracarg.New(a)
 	fb := fracarg.New(b)
 
 	switch op {
 	case '+':
-		r = fa.Add(fb).ToString()
+		y = fa.Add(fb)
 	case '-':
-		r = fa.Sub(fb).ToString()
+		y = fa.Sub(fb)
 	case '*', 'x':
-		r = fa.Mul(fb).ToString()
+		y = fa.Mul(fb)
 	case '/':
-		r = fa.Div(fb).ToString()
+		y = fa.Div(fb)
 	default:
 		fmt.Println("illegal operator: operator must be one of + - x or /")
 		return
 	}
-	fmt.Printf("result: %s\n", r)
+	y.Red()
+	fmt.Printf("result: %s\n", y.ToString())
 }
